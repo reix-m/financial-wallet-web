@@ -13,7 +13,7 @@ export default createVuetify({
   theme: {
     defaultTheme: 'light',
     themes,
-    utilities: false,
+    utilities: true,
   },
   display: {
     mobileBreakpoint: 'md',
