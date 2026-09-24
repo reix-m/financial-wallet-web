@@ -53,6 +53,24 @@ yarn install
 yarn dev
 ```
 
+## 🔌 API
+
+O front consome a API em `/api/v1`; em desenvolvimento o Vite faz proxy para
+`VITE_PROXY_TARGET` (padrão `http://localhost:8000`). No Docker o proxy aponta
+para o serviço `app` da API.
+
+```bash
+VITE_PROXY_TARGET=http://localhost:8000 yarn dev
+```
+
+Contas de demonstração (criadas pelo seed da API): `alice@example.com` /
+`bob@example.com`, senha `password`.
+
+## 🐳 Docker
+
+A partir da raiz do projeto, `docker compose up -d` sobe este front (porta 3000)
+junto da API e da infraestrutura (Postgres, Redis, Mailpit).
+
 ## 🏗️ Build
 
 ```bash
