@@ -68,8 +68,14 @@ Contas de demonstração (criadas pelo seed da API): `alice@example.com` /
 
 ## 🐳 Docker
 
-A partir da raiz do projeto, `docker compose up -d` sobe este front (porta 3000)
-junto da API e da infraestrutura (Postgres, Redis, Mailpit).
+No repositório da API (`financial-wallet-api/`), com este repo na pasta irmã:
+
+```bash
+docker compose --profile web up -d
+```
+
+sobe este front (porta 3000) junto da API e da infraestrutura (Postgres,
+Redis, Mailpit).
 
 ## 🏗️ Build
 
