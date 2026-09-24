@@ -49,6 +49,7 @@
   const formError = ref<string | null>(null)
   const serverErrors = ref<ValidationErrors>({})
   const loading = ref(false)
+  const idempotencyKey = ref('')
 
   watch(open, value => {
     if (value) {
@@ -65,6 +66,7 @@
     amountError.value = null
     formError.value = null
     serverErrors.value = {}
+    idempotencyKey.value = crypto.randomUUID()
   }
 
   async function submit (): Promise<void> {
@@ -79,7 +81,7 @@
     serverErrors.value = {}
 
     try {
-      await wallet.deposit(amount.value)
+      await wallet.deposit(amount.value, idempotencyKey.value)
       open.value = false
       emit('success', 'Depósito realizado com sucesso.')
     } catch (error) {

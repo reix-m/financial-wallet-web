@@ -54,13 +54,14 @@ interface RequestOptions {
   method?: string
   body?: unknown
   auth?: boolean
+  headers?: Record<string, string>
 }
 
 export async function request<T> (
   path: string,
-  { method = 'GET', body, auth = true }: RequestOptions = {},
+  { method = 'GET', body, auth = true, headers: extraHeaders = {} }: RequestOptions = {},
 ): Promise<T> {
-  const headers: Record<string, string> = { Accept: 'application/json' }
+  const headers: Record<string, string> = { Accept: 'application/json', ...extraHeaders }
 
   if (body !== undefined) {
     headers['Content-Type'] = 'application/json'

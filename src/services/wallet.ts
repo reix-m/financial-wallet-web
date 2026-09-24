@@ -16,23 +16,34 @@ export function create (): Promise<ApiResource<Wallet>> {
   return request<ApiResource<Wallet>>('/wallets', { method: 'POST' })
 }
 
-export function deposit (amount: number): Promise<ApiResource<Wallet>> {
+function idempotencyHeaders (idempotencyKey?: string): Record<string, string> {
+  return idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {}
+}
+
+export function deposit (amount: number, idempotencyKey?: string): Promise<ApiResource<Wallet>> {
   return request<ApiResource<Wallet>>('/wallets/deposit', {
     method: 'POST',
     body: { amount },
+    headers: idempotencyHeaders(idempotencyKey),
   })
 }
 
-export function transfer (targetAccountCode: string, amount: number): Promise<ApiResource<Wallet>> {
+export function transfer (
+  targetAccountCode: string,
+  amount: number,
+  idempotencyKey?: string,
+): Promise<ApiResource<Wallet>> {
   return request<ApiResource<Wallet>>('/wallets/transfer', {
     method: 'POST',
     body: { target_account_code: targetAccountCode, amount },
+    headers: idempotencyHeaders(idempotencyKey),
   })
 }
 
-export function revert (transactionId: number): Promise<ApiResource<Wallet>> {
+export function revert (transactionId: number, idempotencyKey?: string): Promise<ApiResource<Wallet>> {
   return request<ApiResource<Wallet>>(`/wallets/transactions/${transactionId}/revert`, {
     method: 'POST',
+    headers: idempotencyHeaders(idempotencyKey),
   })
 }
 

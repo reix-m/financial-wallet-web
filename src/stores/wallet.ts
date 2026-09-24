@@ -55,18 +55,18 @@ async function createWallet (): Promise<void> {
   }
 }
 
-async function deposit (amount: number): Promise<void> {
-  const { data } = await walletService.deposit(amount)
+async function deposit (amount: number, idempotencyKey?: string): Promise<void> {
+  const { data } = await walletService.deposit(amount, idempotencyKey)
   state.wallet = data
 }
 
-async function transfer (targetAccountCode: string, amount: number): Promise<void> {
-  const { data } = await walletService.transfer(targetAccountCode, amount)
+async function transfer (targetAccountCode: string, amount: number, idempotencyKey?: string): Promise<void> {
+  const { data } = await walletService.transfer(targetAccountCode, amount, idempotencyKey)
   state.wallet = data
 }
 
-async function revert (transactionId: number): Promise<void> {
-  const { data } = await walletService.revert(transactionId)
+async function revert (transactionId: number, idempotencyKey?: string): Promise<void> {
+  const { data } = await walletService.revert(transactionId, idempotencyKey)
   state.wallet = data
 }
 

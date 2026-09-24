@@ -46,10 +46,12 @@
 
   const formError = ref<string | null>(null)
   const loading = ref(false)
+  const idempotencyKey = ref('')
 
   watch(open, value => {
     if (value) {
       formError.value = null
+      idempotencyKey.value = crypto.randomUUID()
     }
   })
 
@@ -62,7 +64,7 @@
     formError.value = null
 
     try {
-      await wallet.revert(props.transaction.id)
+      await wallet.revert(props.transaction.id, idempotencyKey.value)
       open.value = false
       emit('success', 'Transação revertida com sucesso.')
     } catch (error) {
