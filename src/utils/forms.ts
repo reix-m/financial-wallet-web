@@ -9,6 +9,8 @@ export const rules = {
     (value?.length ?? 0) >= min || `Use ao menos ${min} caracteres`,
   sameAs: (target: () => string) => (value: string) =>
     value === target() || 'As senhas não coincidem',
+  accountCode: (value: string) =>
+    /^\d{6}$/.test(value ?? '') || 'Informe um código de 6 dígitos',
 }
 
 export function validationErrors (error: unknown): ValidationErrors {
